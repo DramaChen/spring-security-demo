@@ -82,6 +82,7 @@ public class BrowserWebSecurityConfiguration extends AbstractSecurityConfigurati
                 .logout()
                 .logoutUrl(systemSecurityProperties.getLogin().getLogoutUrl())
                 .logoutSuccessHandler(systemLogoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
                 .and()
                 .authorizeRequests()
                 //指定连接，放行对登录页面路径的拦截
