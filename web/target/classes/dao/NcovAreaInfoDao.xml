@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncov.base.web.dao.NcovAreaInfoDao">
+    <resultMap id="BaseResultMap" type="com.ncov.base.web.model.entity.NcovAreaInfo">
+                <id column="id" property="id"/>
+                <result column="dead_count" property="deadCount"/>
+                <result column="cured_count" property="curedCount"/>
+                <result column="suspected_count" property="suspectedCount"/>
+                <result column="confirmed_count" property="confirmedCount"/>
+                <result column="current_confirmed_count" property="currentConfirmedCount"/>
+                <result column="city_name" property="cityName"/>
+                <result column="city_english_name" property="cityEnglishName"/>
+                <result column="location_id" property="locationId"/>
+                <result column="province_name" property="provinceName"/>
+                <result column="parent_area_id" property="parentAreaId"/>
+                <result column="country_name" property="countryName"/>
+                <result column="country_english_name" property="countryEnglishName"/>
+                <result column="continent_name" property="continentName"/>
+                <result column="continent_english_name" property="continentEnglishName"/>
+                <result column="province_english_name" property="provinceEnglishName"/>
+                <result column="comment" property="comment"/>
+                <result column="update_time" property="updateTime"/>
+                <result column="create_by" property="createBy"/>
+                <result column="update_by" property="updateBy"/>
+                <result column="create_date" property="createDate"/>
+                <result column="update_date" property="updateDate"/>
+                <result column="delete_flag" property="deleteFlag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+            id,
+            dead_count,
+            cured_count,
+            suspected_count,
+            confirmed_count,
+            current_confirmed_count,
+            city_name,
+            city_english_name,
+            location_id,
+            province_name,
+            parent_area_id,
+            country_name,
+            country_english_name,
+            continent_name,
+            continent_english_name,
+            province_english_name,
+            comment,
+            update_time,
+            create_by,
+            update_by,
+            create_date,
+            update_date,
+            delete_flag
+    </sql>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into ncov_area_info(
+        id,
+        dead_count,
+        cured_count,
+        suspected_count,
+        confirmed_count,
+        current_confirmed_count,
+        city_name,
+        city_english_name,
+        location_id,
+        province_name,
+        parent_area_id,
+        country_name,
+        country_english_name,
+        continent_name,
+        continent_english_name,
+        province_english_name,
+        comment,
+        update_time,
+        create_by,
+        update_by,
+        create_date,
+        update_date,
+        delete_flag
+        ) values(
+        #{id},
+        #{deadCount},
+        #{curedCount},
+        #{suspectedCount},
+        #{confirmedCount},
+        #{currentConfirmedCount},
+        #{cityName},
+        #{cityEnglishName},
+        #{locationId},
+        #{provinceName},
+        #{parentAreaId},
+        #{countryName},
+        #{countryEnglishName},
+        #{continentName},
+        #{continentEnglishName},
+        #{provinceEnglishName},
+        #{comment},
+        #{updateTime},
+        #{createBy},
+        #{updateBy},
+        #{createDate},
+        #{updateDate},
+        #{deleteFlag}
+        )
+    </insert>
+    <update id="update">
+        update ncov_area_info
+        set
+        dead_count=#{deadCount},
+        cured_count=#{curedCount},
+        suspected_count=#{suspectedCount},
+        confirmed_count=#{confirmedCount},
+        current_confirmed_count=#{currentConfirmedCount},
+        city_name=#{cityName},
+        city_english_name=#{cityEnglishName},
+        location_id=#{locationId},
+        province_name=#{provinceName},
+        parent_area_id=#{parentAreaId},
+        country_name=#{countryName},
+        country_english_name=#{countryEnglishName},
+        continent_name=#{continentName},
+        continent_english_name=#{continentEnglishName},
+        province_english_name=#{provinceEnglishName},
+        comment=#{comment},
+        update_time=#{updateTime},
+        create_by=#{createBy},
+        update_by=#{updateBy},
+        create_date=#{createDate},
+        update_date=#{updateDate},
+        delete_flag=#{deleteFlag}
+        where
+        id=#{id}
+    </update>
+
+        <update id="delete">
+            update ncov_area_info
+            set
+            deleted='1'
+            where
+            id=#{id}
+        </update>
+    <select id="get" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ncov_area_info
+        where
+        id=#{id}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ncov_area_info
+    </select>
+    <delete id="deleteDataOfToday">
+        delete
+        from ncov_area_info
+        where
+        TO_DAYS(now()) - TO_DAYS(update_time) <![CDATA[<]]>#{lastDays}
+    </delete>
+    <select id="countData" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ncov_area_info
+    </select>
+</mapper>
