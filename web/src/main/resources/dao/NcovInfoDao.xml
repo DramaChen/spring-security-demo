@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncov.base.web.dao.NcovInfoDao">
+    <sql id="BaseInfo">
+        id,
+            dead_count,
+            cured_count,
+            serious_count,
+            suspected_count,
+            confirmed_count,
+            current_confirmed_count,
+            current_confirmed_incr,
+            suspected_incr,
+            serious_incr,
+            confirmed_incr,
+            dead_incr,
+            cured_incr,
+            general_remark,
+            note3,
+            note2,
+            note1,
+            update_time,
+            create_by,
+            update_by,
+            create_date,
+            update_date,
+            delete_flag
+    </sql>
+    <insert id="insert">
+        insert into
+         ncov_info(
+            id,
+            dead_count,
+            cured_count,
+            serious_count,
+            suspected_count,
+            confirmed_count,
+            current_confirmed_count,
+            current_confirmed_incr,
+            suspected_incr,
+            serious_incr,
+            confirmed_incr,
+            dead_incr,
+            cured_incr,
+            general_remark,
+            note3,
+            note2,
+            note1,
+            update_time,
+            create_by,
+            update_by,
+            create_date,
+            update_date,
+            delete_flag
+         )
+        values (
+            #{id},
+            #{deadCount},
+            #{curedCount},
+            #{seriousCount},
+            #{suspectedCount},
+            #{confirmedCount},
+            #{currentConfirmedCount},
+            #{currentConfirmedIncr},
+            #{suspectedIncr},
+            #{seriousIncr},
+            #{confirmedIncr},
+            #{deadIncr},
+            #{curedIncr},
+            #{generalRemark},
+            #{note3},
+            #{note2},
+            #{note1},
+            #{updateTime},
+            #{createBy},
+            #{updateBy},
+            #{createDate},
+            #{updateDate},
+            #{deleteFlag}
+        )
+    </insert>
+    <select id="list" resultType="com.ncov.base.web.model.entity.NcovInfo">
+        select
+        <include refid="BaseInfo"></include>
+        from
+        ncov_info
+    </select>
+    <delete id="deleteDataOfToday">
+        delete
+        from ncov_info
+        where
+        TO_DAYS(now()) - TO_DAYS(update_time) <![CDATA[<]]>#{lastDays}
+    </delete>
+    <select id="countNcvoInfo" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ncov_info
+    </select>
+</mapper>
