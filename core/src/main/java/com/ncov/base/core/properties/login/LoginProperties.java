@@ -82,4 +82,22 @@ public class LoginProperties {
      * </pre>
      */
     private String sessionInvalidUrl="/session/invalid";
+    /**
+     * <pre>
+     *     描述：记住登录最长时限
+     * </pre>
+     */
+    private int maxRememberMeSeconds=30;
+    /**
+     * <pre>
+     *     描述：默认登出链接
+     * </pre>
+     */
+    private String logoutUrl=SecurityConstants.DEFAULT_LOGIN_OUT_URL;
+    /**
+     * <pre>
+     *     描述：登出成功跳转页面
+     * </pre>
+     */
+    private String logoutPage;
 }

@@ -117,6 +117,7 @@ public class RestTest {
         AtomicInteger domesticCount = new AtomicInteger();
         AtomicInteger koreaCount = new AtomicInteger();
         AtomicInteger totalCount = new AtomicInteger();
+        Integer startCount = ncovAreaInfoService.countData();
         Set<String> countrySet=new HashSet<>();
         Date startDate = createDate();
         long deleteCount = ncovAreaInfoService.deleteDataOfToday(LAST_DAYS+1);
@@ -147,7 +148,7 @@ public class RestTest {
         }
         Integer dataCount = ncovAreaInfoService.countData();
         log.info("国内数据量:{},海外数据量{}",domesticCount,boardCount);
-        log.info("清除今日数据:{}条，新增数据总量:{},采集后数据总量:{}",deleteCount,totalCount,dataCount);
+        log.info("起始采集数据量:{}条,清除今日数据:{}条，新增数据总量:{},采集后数据总量:{}",startCount,deleteCount,totalCount,dataCount);
         log.info("数据处理耗时:{}",(System.currentTimeMillis()-startTime));
     }
 

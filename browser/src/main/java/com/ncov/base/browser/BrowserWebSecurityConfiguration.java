@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -38,6 +41,17 @@ public class BrowserWebSecurityConfiguration extends AbstractSecurityConfigurati
     @Autowired
     private SmsAuthenticationConfig smsAuthenticationConfig;
 
+    //记住我持久化器
+    @Autowired
+    private PersistentTokenRepository persistentTokenRepository;
+    //配合UserDetailService
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    //登出成功处理器
+    @Autowired
+    private LogoutSuccessHandler systemLogoutSuccessHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -59,6 +73,15 @@ public class BrowserWebSecurityConfiguration extends AbstractSecurityConfigurati
                 .maxSessionsPreventsLogin(systemSecurityProperties.getLogin().getMaxSessionsPreventsLogin())//不允许有其他用户继续登录
                 .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
+                .and()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository)
+                .tokenValiditySeconds(systemSecurityProperties.getLogin().getMaxRememberMeSeconds())
+                .userDetailsService(userDetailsService)
+                .and()
+                .logout()
+                .logoutUrl(systemSecurityProperties.getLogin().getLogoutUrl())
+                .logoutSuccessHandler(systemLogoutSuccessHandler)
                 .and()
                 .authorizeRequests()
                 //指定连接，放行对登录页面路径的拦截

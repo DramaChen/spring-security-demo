@@ -41,6 +41,13 @@ public interface SecurityConstants {
     /**
      * 默认的处理验证码的url前缀
      */
-    public static final String DEFAULT_VALIDATE_CODE_URL_PREFIX = "/code";
+    String DEFAULT_VALIDATE_CODE_URL_PREFIX = "/code";
+    /**
+     * <pre>
+     *     描述：默认登出跳转链接
+     * </pre>
+     */
+    String DEFAULT_LOGIN_OUT_URL="/authentication/logout";
+
 
 }
